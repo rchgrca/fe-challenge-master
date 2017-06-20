@@ -46,6 +46,19 @@
             }
         </style>
         <script>
+            function isScrollBottom(){
+                return document.body.scrollHeight == document.body.scrollTop + window.innerHeight
+            }
+            function initializeContent(){
+                document.getElementById("resultsCompany").innerHTML = resultsNone()
+            }
+            function initializeScrollListener(){
+                document.addEventListener("scroll", function (event) {
+                    if (isScrollBottom()){
+                        console.log("bottom")
+                    }
+                })
+            }
             function setMultipleListing(){
                 return `<li class="mb2 p1 black result">This Company</li>`
             }
@@ -62,11 +75,15 @@
                                  <div class="mb1">Labor Type: <a href="javascript:void(0)" class="black">Union</a>, <a href="javascript:void(0)" class="black">Non-Union</a></div>
                             </div>
                         </li>
-                `
+                        `
+            }
+            function resultsNone(){
+
+                return `<li class="black opacity-8 center">There are no results</li>`
             }
             window.onload = function(){
-               //document.getElementById("resultsCompany").innerHTML = setMultipleListing()
-               document.getElementById("resultsCompany").innerHTML = setSingleListing()
+               initializeContent()
+               initializeScrollListener()
             }
         </script>
     </head>
