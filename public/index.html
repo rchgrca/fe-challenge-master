@@ -77,6 +77,8 @@
                 dataQuery("",laborTypes)
             }
             function resultsDetail(o){
+                start = 0
+                window.scrollTo(0,0)
                 dataQuery(o.innerText)
             }
             function resultsNone(){
@@ -111,7 +113,12 @@
                 }).join('')
             }
             function resultsUpdate(html){
-                document.getElementById("resultsCompany").innerHTML = html
+                if(isInfiniteScroll){
+                    document.getElementById("resultsCompany").innerHTML += html
+                } else {
+                    document.getElementById("resultsCompany").innerHTML = html
+                }
+                setInfiniteScroll(false)
             }
             function resultsTotal(total){
                 var numDisplayed = start + limit
