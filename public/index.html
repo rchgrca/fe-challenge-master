@@ -52,6 +52,7 @@
             }
             function initializeContent(){
                 document.getElementById("resultsCompany").innerHTML = resultsNone()
+                document.getElementById("labortypes").innerHTML = renderLaborTypes()
                 setInfiniteScroll(false)
             }
             function initializeScrollListener(){
@@ -70,6 +71,23 @@
             }
             function getSearchInput(){
                 return document.getElementById("searchInput").value
+            }
+            function toggleLaborTypes(){
+                var oTypes = document.getElementById("labortypes").classList,
+                   oHeader = document.getElementById("laborheader").classList
+               oTypes.contains("display-none") ?  oTypes.remove("display-none"):oTypes.add("display-none")
+               if(oHeader.contains("white")){
+                   oHeader.remove("white")
+                   oHeader.add("bg-white")
+               } else {
+                   oHeader.remove("bg-white")
+                   oHeader.add("white")
+               }
+            }
+            function renderLaborTypes(){
+                return ["Union","Non-Union","Prevailing Wages","None"].map(function(type){
+                    return `<li class=""><input type="checkbox" name="laborTypes" value="${type}" onclick="dataLaborTypes()"><label>${type}</label></li>`
+                }).join('')
             }
             function resultsLabor(o){
                 var laborTypes = o.innerHTML
@@ -166,6 +184,17 @@
                 xhr.open("GET", `/api/companies?${dataString(s,laborTypes)}`)
                 xhr.send();
             }
+            function dataLaborTypes(){
+                var aCheckBoxes = document.getElementsByName("laborTypes"),
+                aLaborTypes = [], laborTypes
+                for(var i=0;i<aCheckBoxes.length;i++){
+                    if(aCheckBoxes[i].checked){
+                        aLaborTypes.push(aCheckBoxes[i].value)
+                    }
+                }
+                clearSearchInput()
+                dataQuery("",aLaborTypes.join(','))
+            }
             function dataOnKeyUp(o){
                 setTimeout(function(){
                     dataQuery(o.value)
@@ -175,8 +204,8 @@
                 dataFetch(s,laborTypes)
             }
             window.onload = function(){
-               initializeContent()
-               initializeScrollListener()
+                initializeContent()
+                initializeScrollListener()
             }
         </script>
     </head>
@@ -189,7 +218,7 @@
                         <input type="text" class="field col-11 p1 h5" onkeyup="dataOnKeyUp(this)" id="searchInput"/>
                         <i class="fa fa-search fa-lg absolute orange search-icon" aria-hidden="true"></i>
                     </div>
-                    <div class="center opacity-8 white" id="laborheader">
+                    <div class="center opacity-8 white" onclick="toggleLaborTypes()" id="laborheader">
                         <span class="h2 inline-block">Labor Types</span>
                         <i class="fa fa-caret-down inline-block" aria-hidden="true"></i>
                     </div>
