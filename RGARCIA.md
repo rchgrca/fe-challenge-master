@@ -16,9 +16,9 @@
       * results
         * multiple listings: different style on hover
           * display single listing onclick
-        * display "num listings" of "total listings" to increase user confidence
-        * single listing display all data
-        * single listing display laborTypes as links
+        * display "numListings" of "totalListings" to increase user confidence
+        * single listing, display all data details
+        * single listing, display laborTypes as links for convenient filtering
           * onclick, display all listings with that laborType
       * laborTypes
         * hide laborTypes for all
@@ -28,7 +28,8 @@
       * when typing in search box, delay sending request for 1 second, else no delay
       * use infinite scrolling
         * display 50 results
-        * on scrollbar bottom, a request is send for the next 50 listings
+        * on scrollbar bottom, a request is sent for the next 50 listings
+        * append new listings to current listings
 
 ## Accomplished
 
@@ -45,13 +46,14 @@ If you have some spare time at the end here are a few stretch goals:
 
 ## Features
 
-* filter laborType by link found in single listing detail (eg: type 'Trane', click 'None', all listings with 'None' labortype are displayed)
-* click on LaborTypes header.  This would take up too much space for mobile so it's not displayed unless toggled
-* onkeyup is used instead onchange for search input because it's a better user experience
+* Filter laborType by link found in single listing detail (eg: type 'Trane', click 'None', all listings with 'None' labortype are displayed)
+* Click on LaborTypes header.  This would take up too much space for mobile so it's not displayed unless toggled
+* The onkeyup event is used instead onchange for search input because it's a better user experience
+* Added display of "numListings" of "totalListings" to enhance user experience
 
 ## Bugs
 
-* you can continue to scroll past the limit (user sees "There are no results")
-* you can filter on laborTypes of the entire data set only.  filtering on a string first, then laborType is not possible
-* there are a few tiny UI bugs (eg: items off by 1px)
-* you can enter data beyond the search icon
+* You can continue to scroll past the limit (user sees "There are no results")
+* You can filter on laborTypes of the entire data set only.  Filtering on a string first, then laborType is not possible
+* There are a few tiny UI bugs (eg: items off by 1px)
+* You can enter data beyond the search icon
