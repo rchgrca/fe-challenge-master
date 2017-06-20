@@ -60,9 +60,6 @@
                     }
                 })
             }
-            function setMultipleListing(){
-                return `<li class="mb2 p1 black result">This Company</li>`
-            }
             function setSingleListing(){
                 return `
                         <li class="mb1 p1 black clearfix">
@@ -81,8 +78,13 @@
             function resultsNone(){
                 return `<li class="black opacity-8 center">There are no results</li>`
             }
+            function resultsMultiple(data){
+                return data.results.map(function(result){
+                    return `<li class="mb2 p1 black result" onclick="resultsDetail(this)">${result.name}</li>`
+                }).join('')
+            }
             function dataSuccess(){
-                console.log(JSON.parse(this.responseText))
+                document.getElementById("resultsCompany").innerHTML = resultsMultiple(JSON.parse(this.responseText))
             }
             function dataFail(e){
                 document.getElementById("resultsCompany").innerHTML = '<li class="black opacity-8 center">API Request Failure</li>'
