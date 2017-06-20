@@ -60,6 +60,14 @@
                     }
                 })
             }
+            function clearSearchInput(){
+                document.getElementById("searchInput").value = ""
+            }
+            function resultsLabor(o){
+                var laborTypes = o.innerHTML
+                clearSearchInput()
+                dataQuery("",laborTypes)
+            }
             function resultsDetail(o){
                 dataQuery(o.innerText)
             }
