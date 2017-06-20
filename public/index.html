@@ -60,23 +60,31 @@
                     }
                 })
             }
-            function setSingleListing(){
-                return `
-                        <li class="mb1 p1 black clearfix">
-                            <div class="left mb2 mr2 table-cell center">
-                                <img class="p1 border border--gray" src="https://pbs.twimg.com/media/CbXORb_UAAAnz-_.jpg" alt="">
-                            </div>
-                            <div class="mt2 table-cell">
-                                 <div class="mb1">Building Connected</div>
-                                 <div class="mb1">(415) 555-1212</div>
-                                 <div class="mb1"><a href="http://buildingconnected.com" class="black">http://buildingconnected.com</a></div>
-                                 <div class="mb1">Labor Type: <a href="javascript:void(0)" class="black">Union</a>, <a href="javascript:void(0)" class="black">Non-Union</a></div>
-                            </div>
-                        </li>
-                        `
-            }
             function resultsNone(){
                 return `<li class="black opacity-8 center">There are no results</li>`
+            }
+            function resultsLaborTypes(result){
+                return result.laborType.map(function(labor){
+                    return `<a href="javascript:void(0)" onclick="resultsLabor(this)" class="black">${labor}</a>`
+                }).join(', ')
+            }
+            function resultsOneSearchInput(company){
+                document.getElementById("searchInput").value = company
+            }
+            function resultsOne(data){
+                var result = data.results[0]
+                resultsOneSearchInput(result.name)
+                return `<li class="mb1 p1 black clearfix">
+                            <div class="left mb2 mr2 table-cell center">
+                                <img class="p1 border border--gray" src="${result.avatarUrl}" alt="${result.name}"/>
+                            </div>
+                            <div class="mt2 table-cell">
+                                 <div class="mb1">${result.name}</div>
+                                 <div class="mb1">${result.phone}</div>
+                                 <div class="mb1"><a href="${result.website}" class="black">${result.website}</a></div>
+                                 <div class="mb1">Labor Type: ${resultsLaborTypes(result)}</div>
+                            </div>
+                        </li>`
             }
             function resultsMultiple(data){
                 return data.results.map(function(result){
@@ -84,7 +92,8 @@
                 }).join('')
             }
             function dataSuccess(){
-                document.getElementById("resultsCompany").innerHTML = resultsMultiple(JSON.parse(this.responseText))
+                //document.getElementById("resultsCompany").innerHTML = resultsMultiple(JSON.parse(this.responseText))
+                document.getElementById("resultsCompany").innerHTML = resultsOne(JSON.parse(this.responseText))
             }
             function dataFail(e){
                 document.getElementById("resultsCompany").innerHTML = '<li class="black opacity-8 center">API Request Failure</li>'
