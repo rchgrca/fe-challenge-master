@@ -1,1 +1,95 @@
-Hello, world!
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Single Page Web App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css" >
+        <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <style>
+            html, body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: linear-gradient(to bottom, #72CCC9 0%, #31708F 100%);
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+            }
+            input:focus {
+                outline: none;
+            }
+            #resultsCompany .result:hover {
+                background: #72CCC9;
+                color: white;
+                cursor: pointer;
+            }
+            .bg-darkteal {
+                background-color: #31708F;
+            }
+            .opacity-8 {
+                opacity: .8;
+            }
+            .fa-search {
+                top: 10px;
+                right: 15px;
+            }
+            .fa-caret-down {
+                top: 3px;
+                right: 85px;
+                cursor: pointer;
+            }
+            .results img {
+                max-width: 250px;
+                min-width: 175px;
+            }
+        </style>
+        <script>
+            function setMultipleListing(){
+                return `<li class="mb2 p1 black result">This Company</li>`
+            }
+            function setSingleListing(){
+                return `
+                        <li class="mb1 p1 black clearfix">
+                            <div class="left mb2 mr2 table-cell center">
+                                <img class="p1 border border--gray" src="https://pbs.twimg.com/media/CbXORb_UAAAnz-_.jpg" alt="">
+                            </div>
+                            <div class="mt2 table-cell">
+                                 <div class="mb1">Building Connected</div>
+                                 <div class="mb1">(415) 555-1212</div>
+                                 <div class="mb1"><a href="http://buildingconnected.com" class="black">http://buildingconnected.com</a></div>
+                                 <div class="mb1">Labor Type: <a href="javascript:void(0)" class="black">Union</a>, <a href="javascript:void(0)" class="black">Non-Union</a></div>
+                            </div>
+                        </li>
+                `
+            }
+            window.onload = function(){
+               //document.getElementById("resultsCompany").innerHTML = setMultipleListing()
+               document.getElementById("resultsCompany").innerHTML = setSingleListing()
+            }
+        </script>
+    </head>
+    <body class="bg-darkteal">
+        <div class="clearfix">
+            <section class="sm-col sm-col-3 px1 search">
+                <p class="h2 center white opacity-8">Company</p>
+                <div class="rounded opacity-8 clearfix">
+                    <div class="mb2 relative">
+                        <input type="text" class="field col-11 p1 h5" id="searchInput"/>
+                        <i class="fa fa-search fa-lg absolute orange search-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="center opacity-8 white" id="laborheader">
+                        <span class="h2 inline-block">Labor Types</span>
+                        <i class="fa fa-caret-down inline-block" aria-hidden="true"></i>
+                    </div>
+                    <ul class="list-reset mx-auto rounded m0 p1 opacity-8 bg-white display-none" id="labortypes"></ul>
+                </div>
+            </section>
+            <section class="sm-col sm-col-9 px1 results">
+                <p class="h2 center white opacity-8">Results<span id="resultsTotal"></span></p>
+                <ul class="list-reset p1 rounded bg-white black opacity-8 border border--silver" id="resultsCompany"></ul>
+            </section>
+        <div>
+    </body>
+</html>
