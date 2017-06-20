@@ -91,9 +91,32 @@
                     return `<li class="mb2 p1 black result" onclick="resultsDetail(this)">${result.name}</li>`
                 }).join('')
             }
+            function resultsUpdate(html){
+                document.getElementById("resultsCompany").innerHTML = html
+            }
+            function resultsTotal(total){
+                var numDisplayed = start + limit
+                numDisplayed = (total < numDisplayed) ? total : numDisplayed
+                document.getElementById("resultsTotal").innerHTML = `: ${numDisplayed} of ${total}`
+            }
+            function resultsRender(data){
+                var html;
+                switch(data.results.length){
+                    case 0:
+                        html = resultsNone()
+                        break
+                    case 1:
+                        html = resultsOne(data)
+                        break
+                    default:
+                        html = resultsMultiple(data)
+                        break
+                }
+                resultsTotal(data.total)
+                resultsUpdate(html)
+            }
             function dataSuccess(){
-                //document.getElementById("resultsCompany").innerHTML = resultsMultiple(JSON.parse(this.responseText))
-                document.getElementById("resultsCompany").innerHTML = resultsOne(JSON.parse(this.responseText))
+                resultsRender(JSON.parse(this.responseText))
             }
             function dataFail(e){
                 document.getElementById("resultsCompany").innerHTML = '<li class="black opacity-8 center">API Request Failure</li>'
