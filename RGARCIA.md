@@ -43,11 +43,15 @@ If you have some spare time at the end here are a few stretch goals:
 * Focus on polishing the UI to look slick (DONE)
 * Allow filtering results by labor type (DONE)
 
-# FEATURE
-* filter laborType by link found in single listing detail (eg: type 'Trane', click 'None', all listings with 'None' labortype are displayed)
+## Features
 
-## BUGS
+* filter laborType by link found in single listing detail (eg: type 'Trane', click 'None', all listings with 'None' labortype are displayed)
+* click on LaborTypes header.  This would take up too much space for mobile so it's not displayed unless toggled
+* onkeyup is used instead onchange for search input because it's a better user experience
+
+## Bugs
 
 * you can continue to scroll past the limit (user sees "There are no results")
 * you can filter on laborTypes of the entire data set only.  filtering on a string first, then laborType is not possible
 * there are a few tiny UI bugs (eg: items off by 1px)
+* you can enter data beyond the search icon
