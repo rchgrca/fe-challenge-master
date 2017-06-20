@@ -46,6 +46,7 @@
             }
         </style>
         <script>
+            var start = 0, limit = 50
             function isScrollBottom(){
                 return document.body.scrollHeight == document.body.scrollTop + window.innerHeight
             }
@@ -78,12 +79,34 @@
                         `
             }
             function resultsNone(){
-
                 return `<li class="black opacity-8 center">There are no results</li>`
+            }
+            function dataSuccess(){
+                console.log(JSON.parse(this.responseText))
+            }
+            function dataFail(e){
+                document.getElementById("resultsCompany").innerHTML = '<li class="black opacity-8 center">API Request Failure</li>'
+            }
+            function dataString(s="",laborTypes=""){
+                var qs = []
+                qs.push(`q=${encodeURIComponent(s)}`)
+                qs.push(`start=${start}`)
+                qs.push(`limit=${limit}`)
+                qs.push(`laborTypes=${laborTypes}`)
+                return qs.join('&')
+            }
+            function dataFetch(s="",laborTypes=""){
+                //http://localhost:3000/api/companies?q=inc&start=0&limit=50&laborTypes=Union,Non-Union
+                var xhr = new XMLHttpRequest()
+                xhr.addEventListener("load", dataSuccess)
+                xhr.addEventListener("error", dataFail)
+                xhr.open("GET", `/api/companies?${dataString(s,laborTypes)}`)
+                xhr.send();
             }
             window.onload = function(){
                initializeContent()
                initializeScrollListener()
+               dataFetch("","")
             }
         </script>
     </head>
