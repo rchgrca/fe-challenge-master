@@ -46,22 +46,30 @@
             }
         </style>
         <script>
-            var start = 0, limit = 50
+            var start = 0, limit = 50, isInfiniteScroll = false
             function isScrollBottom(){
                 return document.body.scrollHeight == document.body.scrollTop + window.innerHeight
             }
             function initializeContent(){
                 document.getElementById("resultsCompany").innerHTML = resultsNone()
+                setInfiniteScroll(false)
             }
             function initializeScrollListener(){
                 document.addEventListener("scroll", function (event) {
                     if (isScrollBottom()){
-                        console.log("bottom")
+                        setInfiniteScroll(true)
+                        dataInfiniteScroll()
                     }
                 })
             }
+            function setInfiniteScroll(boolean){
+                isInfiniteScroll = boolean
+            }
             function clearSearchInput(){
                 document.getElementById("searchInput").value = ""
+            }
+            function getSearchInput(){
+                return document.getElementById("searchInput").value
             }
             function resultsLabor(o){
                 var laborTypes = o.innerHTML
@@ -131,6 +139,10 @@
             }
             function dataFail(e){
                 document.getElementById("resultsCompany").innerHTML = '<li class="black opacity-8 center">API Request Failure</li>'
+            }
+            function dataInfiniteScroll(){
+                start += limit
+                dataQuery(getSearchInput())
             }
             function dataString(s="",laborTypes=""){
                 var qs = []
