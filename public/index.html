@@ -96,17 +96,23 @@
                 return qs.join('&')
             }
             function dataFetch(s="",laborTypes=""){
-                //http://localhost:3000/api/companies?q=inc&start=0&limit=50&laborTypes=Union,Non-Union
                 var xhr = new XMLHttpRequest()
                 xhr.addEventListener("load", dataSuccess)
                 xhr.addEventListener("error", dataFail)
                 xhr.open("GET", `/api/companies?${dataString(s,laborTypes)}`)
                 xhr.send();
             }
+            function dataOnKeyUp(o){
+                setTimeout(function(){
+                    dataQuery(o.value)
+                },1000)
+            }
+            function dataQuery(s,laborTypes=""){
+                dataFetch(s,laborTypes)
+            }
             window.onload = function(){
                initializeContent()
                initializeScrollListener()
-               dataFetch("","")
             }
         </script>
     </head>
@@ -116,7 +122,7 @@
                 <p class="h2 center white opacity-8">Company</p>
                 <div class="rounded opacity-8 clearfix">
                     <div class="mb2 relative">
-                        <input type="text" class="field col-11 p1 h5" id="searchInput"/>
+                        <input type="text" class="field col-11 p1 h5" onkeyup="dataOnKeyUp(this)" id="searchInput"/>
                         <i class="fa fa-search fa-lg absolute orange search-icon" aria-hidden="true"></i>
                     </div>
                     <div class="center opacity-8 white" id="laborheader">
